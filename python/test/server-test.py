@@ -1,5 +1,5 @@
 import xmlrpclib, random, time
-from config import serverAddress, serverPort, controlPassword, sleepTime, testCount, submitCount
+from config import serverAddress, serverPort, controlPassword, sleepTime, testCount, submitCount, clientName
 
 s = xmlrpclib.ServerProxy('http://%s:%s' % (serverAddress, serverPort))
 
@@ -37,7 +37,7 @@ def reset():
 	data   = dict()
 	random.seed(time.time())
 	numberOfFields = random.randint(0, len(possibleFields) - 1)
-	print "Generating [%s] fields." % numberOfFields
+	#print "Generating [%s] fields." % numberOfFields
 	
 def initTypes():
 	global numberOfFields
@@ -75,11 +75,21 @@ def run():
 		initTypes()
 		initFields()
 		dbNumber = n
-		for i in range(0, submitCount):
-			time.sleep(sleepTime)
-			db = 'TestDB_%s' % dbNumber
-			print "Test [%s - %s]" % (n, i)
-			s.insert(db, fields, types, data) 
+		db = clientName + '_%s' % dbNumber
+		print 'populating: ' + db
+		for i in range(0, submitCount):	
+			time.sleep(sleepTime)	
+			#print "Test [%s - %s]" % (n, i)
+			s.insert(db, fields, types, data)
+		# check
+		count = s.rowCount(db, fields, types)
+		
+		if (count == submitCount):
+			print 'good'
+		else:
+			print 'bad'
+
+		#print db + '\nexpected rows:%s\tactual rows:' % submitCount
 
 def testStateToggle():
 	s.setState(controlPassword, False)
@@ -100,7 +110,9 @@ def testStateToggle():
 				s.insert(db, fields, types, data) 
 				time.sleep(sleepTime)
 				s.setState(controlPassword, False)
-	
+
+
+
 run()
 #testStateToggle()
 

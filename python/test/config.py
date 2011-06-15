@@ -12,7 +12,7 @@ serverAddress = 'localhost'
 
 # Choose the port that you wish to run the 
 # server on. Anything over 1024 should be fine.
-serverPort = 8080
+serverPort = 8020
 
 # Remote operation password
 # If you want to be able to start and stop the server 
@@ -24,7 +24,10 @@ controlPassword = 'changeme'
 sleepTime = 0
 
 # Number of Test Clients (Number of databases to test)
-testCount = 10
+testCount = 2
 
 # Number of submissions per client (Number of database inserts to commit)
-submitCount = 100
+submitCount = 2
+
+# Name of client (or possibly user) that is creating and populating the databases
+clientName = 'Zach'

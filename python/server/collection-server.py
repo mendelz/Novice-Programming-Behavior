@@ -302,9 +302,29 @@ def getRunState():
 	return serverRunning
 	
 #########################################
+# MAKE SURE EVERYTHING IS THERE
+#########################################
+def rowCount(name, fields, types):
+	# Get the hased name
+	prep_data(fields, types, {})
+	hashName = hashDBName(name, fields) + '.sqlite'
+	
+	# Estalish a connection and initialize a cursor.
+	conn = sqlite3.connect(sqliteFile(hashName))
+	cur = conn.cursor()
+	
+	# Prepare query.
+	s = 'select count(*) from ' + name
+	
+	# Execute and return.
+	result = cur.execute(s)
+	return result.fetchone()[0]
+	
+#########################################
 # RPC REGISTRATION AND STARTUP
 #########################################
 server.register_function(store, 'insert')
 server.register_function(setRunState, 'setState')
 server.register_function(getRunState, 'getState')
+server.register_function(rowCount, 'rowCount')
 server.serve_forever()
