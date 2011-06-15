@@ -1,5 +1,5 @@
 import xmlrpclib, random, time
-from config import serverAddress, serverPort, controlPassword, sleepTime
+from config import serverAddress, serverPort, controlPassword, sleepTime, testCount, submitCount
 
 s = xmlrpclib.ServerProxy('http://%s:%s' % (serverAddress, serverPort))
 
@@ -70,13 +70,13 @@ def run():
 	global data
 	global types
 	global fields
-	for n in range(0, 30):
+	for n in range(0, testCount):
 		reset()
 		initTypes()
 		initFields()
-		for i in range(0, 50):
+		dbNumber = n
+		for i in range(0, submitCount):
 			time.sleep(sleepTime)
-			dbNumber = random.randint(0, 4)
 			db = 'TestDB_%s' % dbNumber
 			print "Test [%s - %s]" % (n, i)
 			s.insert(db, fields, types, data) 
@@ -102,7 +102,7 @@ def testStateToggle():
 				s.setState(controlPassword, False)
 	
 run()
-testStateToggle()
+#testStateToggle()
 
 # Print list of available methods
 #print s.system.listMethods()
