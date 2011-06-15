@@ -22,3 +22,9 @@ controlPassword = 'changeme'
 
 # Time between tests.
 sleepTime = 0
+
+# Number of Test Clients (Number of databases to test)
+testCount = 10
+
+# Number of submissions per client (Number of database inserts to commit)
+submitCount = 100
