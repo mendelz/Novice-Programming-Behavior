@@ -87,7 +87,7 @@ def run():
 		count = s.rowCount(db, fields, types)
 		
 		if (count == submitCount):
-			print '[GOOD] ', math.floor((endTime - startTime) / submitCount), ' queries per second.'
+			print '[GOOD] ', submitCount / (endTime - startTime), ' queries per second.'
 		else:
 			print '[BAD] This is bad. STOP THE PRESSES.'
 
