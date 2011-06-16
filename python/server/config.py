@@ -8,18 +8,18 @@
 # is hosting this script. "localhost" will 
 # prevent machines elsewhere on the 
 # network from logging data.
-serverAddress = 'localhost'
+serverAddress = 'aldenv187.allegheny.edu'
 
 # Choose the port that you wish to run the 
 # server on. Anything over 1024 should be fine.
-serverPort = 8020
+serverPort = 12345
 
 # Set the full path to the directory where you
 # will be storing data. If you run this server
 # as user 'eva', then you will need to make sure
 # that the user 'eva' has permissions to write 
 # to the directory you indicate here.
-dataPath   = '/Users/ZMAN/researchs2011/pyserver/data/'
+dataPath   = '/home/cs1/mendelz/pyserver/'
 
 # If you want to turn on debugging information,
 # set this flag to True

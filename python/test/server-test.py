@@ -1,4 +1,4 @@
-import xmlrpclib, random, time
+import xmlrpclib, random, time, math
 from config import serverAddress, serverPort, controlPassword, sleepTime, testCount, submitCount, clientName
 
 s = xmlrpclib.ServerProxy('http://%s:%s' % (serverAddress, serverPort))
@@ -87,7 +87,7 @@ def run():
 		count = s.rowCount(db, fields, types)
 		
 		if (count == submitCount):
-			print '[GOOD] ', floor((endTime - startTime) / submitCount), ' queries per second.'
+			print '[GOOD] ', math.floor((endTime - startTime) / submitCount), ' queries per second.'
 		else:
 			print '[BAD] This is bad. STOP THE PRESSES.'
 

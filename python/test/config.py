@@ -8,11 +8,11 @@
 # is hosting this script. "localhost" will 
 # prevent machines elsewhere on the 
 # network from logging data.
-serverAddress = 'localhost'
+serverAddress = 'aldenv187.allegheny.edu'
 
 # Choose the port that you wish to run the 
 # server on. Anything over 1024 should be fine.
-serverPort = 8020
+serverPort = 12345
 
 # Remote operation password
 # If you want to be able to start and stop the server 
@@ -24,10 +24,10 @@ controlPassword = 'changeme'
 sleepTime = 0
 
 # Number of Test Clients (Number of databases to test)
-testCount = 2
+testCount = 50
 
 # Number of submissions per client (Number of database inserts to commit)
-submitCount = 2
+submitCount = 500
 
 # Name of client (or possibly user) that is creating and populating the databases
 clientName = 'Zach'
