@@ -77,17 +77,19 @@ def run():
 		dbNumber = n
 		db = clientName + '_%s' % dbNumber
 		print 'populating: ' + db
+		startTime = time.time()
 		for i in range(0, submitCount):	
 			time.sleep(sleepTime)	
 			#print "Test [%s - %s]" % (n, i)
 			s.insert(db, fields, types, data)
+		endTime = time.time()
 		# check
 		count = s.rowCount(db, fields, types)
 		
 		if (count == submitCount):
-			print 'good'
+			print '[GOOD] ', floor((endTime - startTime) / submitCount), ' queries per second.'
 		else:
-			print 'bad'
+			print '[BAD] This is bad. STOP THE PRESSES.'
 
 		#print db + '\nexpected rows:%s\tactual rows:' % submitCount
 
