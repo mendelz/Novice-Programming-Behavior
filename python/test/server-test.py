@@ -85,13 +85,12 @@ def run():
 		endTime = time.time()
 		# check
 		count = s.rowCount(db, fields, types)
-		
+		print 'Expected:%s\tActual:%s' % (submitCount, count) 
 		if (count == submitCount):
 			print '[GOOD] ', submitCount / (endTime - startTime), ' queries per second.'
 		else:
 			print '[BAD] This is bad. STOP THE PRESSES.'
 
-		#print db + '\nexpected rows:%s\tactual rows:' % submitCount
 
 def testStateToggle():
 	s.setState(controlPassword, False)

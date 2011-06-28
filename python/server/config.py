@@ -8,18 +8,18 @@
 # is hosting this script. "localhost" will 
 # prevent machines elsewhere on the 
 # network from logging data.
-serverAddress = 'aldenv187.allegheny.edu'
+serverAddress = 'localhost'
 
 # Choose the port that you wish to run the 
 # server on. Anything over 1024 should be fine.
-serverPort = 12345
+serverPort = 9000
 
 # Set the full path to the directory where you
 # will be storing data. If you run this server
 # as user 'eva', then you will need to make sure
 # that the user 'eva' has permissions to write 
 # to the directory you indicate here.
-dataPath   = '/home/cs1/mendelz/pyserver/'
+dataPath   = '/Users/ZMAN/researchs2011/pyserver/Calculator-Data/bluej/'
 
 # If you want to turn on debugging information,
 # set this flag to True
