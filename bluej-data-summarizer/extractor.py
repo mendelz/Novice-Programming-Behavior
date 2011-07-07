@@ -1,17 +1,13 @@
 import sqlite3, base64, sys
 
-# Connect to the database, get everything, and decode it
-def dump(path, name):
-	conn = sqlite3.connect(path)
-	cur = conn.cursor()
-	
-	s = 'select * from ' + name
-	
-	cur.execute(s)
-	result = cur.fetchall()
-	for i in range(0, len(result)):
-		for j in range(26, 27):
-			return base64.b64decode(result[i][j])
+isEncoded = False
+
+# Decode only if encoded
+def decode(str):
+	if (isEncoded == True):
+		return base64.b64decode(str)
+	else:
+		return str
 
 def compile_data(path, name):
 	# Connect to the database and initialize cursor.
@@ -33,15 +29,21 @@ def compile_data(path, name):
 	cur.execute(failure_count)
 	fail = cur.fetchone()[0]
 	
-	return 'Total Compiles: %s \nSuccessful: %s\tUnsuccessful: %s' % (total, success, fail)
+	#return 'Total Compiles: %s \nSuccessful: %s\tUnsuccessful: %s' % (total, success, fail)
+	return total, success, fail
 	
 def error_data(path, name):
+	global isEncoded
+	
 	# Connect to the database and initialize cursor.
 	conn = sqlite3.connect(path)
 	cur = conn.cursor()
 	
-	# First query: find the total number of errors.		  
-	error_count = 'select count(MSG_TYPE) from ' + name + ' where MSG_TYPE = "RVJST1I="'
+	# First query: find the total number of errors.
+	if (isEncoded == True):		  
+		error_count = 'select count(MSG_TYPE) from ' + name + ' where MSG_TYPE = "RVJST1I="'
+	else:
+		error_count = 'select count(MSG_TYPE) from ' + name + ' where MSG_TYPE = "ERROR"'
 	cur.execute(error_count)
 	count = cur.fetchone()[0]
 
@@ -51,11 +53,24 @@ def error_data(path, name):
 	messages = []
 	
 	for i in range(0, count):
-		messages.append(base64.b64decode(cur.fetchone()[0]))
-		
-	return 'Total Errors: %s\nError Messages:\n%s' % (count, messages)
+		messages.append(decode(cur.fetchone()[0]))
+			
+	# Third query: get a visual summary of compiles	
+	error_freq = 'select MSG_TYPE from ' + name
+	cur.execute(error_freq)
+	error_map = []
 	
+	for i in range(0, 24):
+		if (decode(cur.fetchone()[0]) == 'ERROR'):
+			error_map.append('X')
+		else:
+			error_map.append('O')	
 		
-print error_data(sys.argv[1], sys.argv[2])	
-print compile_data(sys.argv[1], sys.argv[2])
-# print dump('/Users/ZMAN/researchs2011/pyserver/Calculator-Data/bluej/Allegheny_CompileData-068e2c36173a3b1aaf893605be2f85a8.sqlite', 'Allegheny_CompileData')	
+	return 'Total Errors: %s\nError Messages:\n%s\nCompilation Summary:\n%s' \
+	  % (count, messages, ''.join(error_map))
+	
+	
+#total, success, fail = compile_data(sys.argv[1], sys.argv[2])
+#print 'Total Compiles: %s \nSuccessful: %s\tUnsuccessful: %s' % (total, success, fail)
+#print compile_data(sys.argv[1], sys.argv[2])
+print error_data(sys.argv[1], sys.argv[2])
