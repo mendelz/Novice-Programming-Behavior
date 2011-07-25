@@ -1,8 +1,8 @@
-import sqlite3, os, sys, re
+ import sqlite3, os, sys, re
 
 isEncoded = False
 
-##### WRAPPERS #####
+##### HELPERS/WRAPPERS #####
 
 def decode(str):
 	if (isEncoded == True):
@@ -79,7 +79,8 @@ def error_data(path, name, compiles):
 			error_map.append('O')
 
 	return count, ''.join(error_map)
-	
+
+
 ##### MAIN #####
 			
 def run(path):	
